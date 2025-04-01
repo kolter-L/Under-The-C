@@ -2,7 +2,32 @@
 #include <stdlib.h>
 #include "minimax.h"
 
-int game_state(int x, int y, char board[3][3]) {
+typedef struct {
+    int row;
+    int col;
+} Move;
+
+Move available_moves[9];
+int count = 0;
+
+void find_available_moves(int x, int y, char board[3][3]) {
+    for (int i=0; i<y; i++) {
+        for (int j=0; j<x; j++) {
+            if (board[i][j]==' ') {
+                available_moves[count].row=i;
+                available_moves[count].col=j;
+                count++;
+            }
+        }
+    }
+    for (int x=0; x<count; x++){
+        printf("Available Move %d\n", x);
+        printf("row: %d\n", available_moves[x].row);
+        printf("col: %d\n", available_moves[x].col);
+    }
+}
+
+int game_state(int x, int y, char board[x][y]) {
     int state = 0;
     // ROWS AND COLS
     for (int i=0; i<3; i++) {

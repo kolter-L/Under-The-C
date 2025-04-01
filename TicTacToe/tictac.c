@@ -57,6 +57,7 @@ int main() {
             board[next[0]][next[1]]='O';
         }
         state = game_state(3, 3, board);
+        find_available_moves(3, 3, board);
         index++;
     }
 
