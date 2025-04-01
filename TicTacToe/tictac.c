@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "minimax.h"
 
+/* Testing commit with new email */
+
 void print_board(int x, int y, char board[x][y]){
     printf("-------------\n");
     for (int i=0; i<x; i++){
