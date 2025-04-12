@@ -1,30 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 #include "minimax.h"
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) > (b) ? (a) : (b))
 
-typedef struct {
-    int row;
-    int col;
-} Move;
 
-Move available_moves[9];
-int count = 0;
+int minimax(int x, int y, char board[x][y], int depth, bool is_max) {
+    // BASE CONDITION
+    int state = game_state(x, y, board);
+    int best_score = is_max ? -2 : 2;
 
-void find_available_moves(int x, int y, char board[3][3]) {
-    for (int i=0; i<y; i++) {
-        for (int j=0; j<x; j++) {
-            if (board[i][j]==' ') {
-                available_moves[count].row=i;
-                available_moves[count].col=j;
-                count++;
+    // ANYTHING OTHER THAN 2 IS AN END STATE
+    if (state != 2) {
+        return state;
+    }
+
+    for (int i=0; i<x; i++) {
+        for (int j=0; j<y; j++) {
+            if (board[i][j] == ' ') {
+                char test_board[x][y];
+                memcpy(test_board, board, sizeof(test_board));
+                test_board[i][j] = is_max ? 'X' : 'O';
+
+                int score = minimax(x, y, test_board, depth+1, !is_max);
+
+                if (is_max) {
+                    best_score = max(best_score, score);
+                }
+                else {
+                    best_score = min(best_score, score);
+                }
             }
         }
     }
-    for (int x=0; x<count; x++){
-        printf("Available Move %d\n", x);
-        printf("row: %d\n", available_moves[x].row);
-        printf("col: %d\n", available_moves[x].col);
-    }
+
+    return best_score;
 }
 
 int game_state(int x, int y, char board[x][y]) {
@@ -48,6 +60,7 @@ int game_state(int x, int y, char board[x][y]) {
             }
         }
     }
+    // DIAGONALS    
     if (board[0][0] != ' ' && board[0][0]==board[1][1] && board[1][1]==board[2][2]) {
         if (board[0][0]=='X') {
             state = 1;
@@ -64,5 +77,15 @@ int game_state(int x, int y, char board[x][y]) {
             state = -1;
         }
     }
+
+    //  CHECKING FOR TIED TERMINAL STATE
+    for (int i=0; i<x; i++) {
+        for (int j=0; j<y; j++) {
+            if (board[i][j] == ' ' && state == 0) {
+                state = 2;
+            }
+        }
+    }
+
     return state;
 }
