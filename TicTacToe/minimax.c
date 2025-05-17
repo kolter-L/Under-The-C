@@ -6,7 +6,6 @@
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
-
 int minimax(int x, int y, char board[x][y], int depth, bool is_max) {
     // BASE CONDITION
     int state = game_state(x, y, board);

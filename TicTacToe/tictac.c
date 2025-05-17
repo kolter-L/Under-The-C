@@ -4,6 +4,11 @@
 #include <stdbool.h>
 #include <string.h>
 
+// TODO:
+    // IMPLEMENT DEPTH SO THAT IT WILL ALWAYS CHOOSE THE QUICKEST PATH TO WIN
+    // ADD ALPHA-BETA PRUNING
+    // MAKE ALL FUNCTIONS FLEXIBLE SO THAT THE BOARD SIZE CAN BE CHANGED
+
 void print_board(int x, int y, char board[x][y]){
     printf("-------------\n");
     for (int i=0; i<x; i++){
